@@ -4,5 +4,5 @@ import { render } from '@testing-library/svelte';
 test('Welcome the user', () => {
 	const { getByText } = render(Index);
 
-	expect(getByText('Not found in component')).toBeInTheDocument();
+	expect(getByText('Title')).toBeInTheDocument();
 });
