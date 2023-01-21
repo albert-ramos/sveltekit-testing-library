@@ -16,6 +16,7 @@ module.exports = {
             "<rootDir>/.svelte-kit/build/runtime/app$1",
         ],
         "^@/(.*)$": "<rootDir>/src/$1",
+        '^firebase(.*)$': '<rootDir>/test/__mocks__/firebaseMock.js',
     },
     setupFilesAfterEnv: ["<rootDir>/jest-setup.ts"],
     collectCoverageFrom: ["src/**/*.{ts,tsx,svelte,js,jsx}"],

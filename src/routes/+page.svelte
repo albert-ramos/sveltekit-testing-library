@@ -5,7 +5,6 @@
 		getTopics,
 		type Topic
 	} from '@/modules/topic/infrastructure/repository/TopicRepository';
-
 	let topics: Topic[] = [];
 
 	onMount(async () => {
@@ -30,6 +29,7 @@
 
 <div
 	class="flex flex-col container max-w-md mt-10 mx-auto w-full items-center justify-center bg-white dark:bg-gray-800 dark:hover:bg-gray-900 rounded-lg shadow"
+	data-testid="topic-container"
 >
 	<ul class="flex flex-col divide-y w-full">
 		{#each topics as { id, description, title, likes }, i}
