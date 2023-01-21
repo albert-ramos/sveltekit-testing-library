@@ -23,6 +23,20 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
+## Testing
+
+To create a production version of your app:
+
+```bash
+# all tests
+npm test
+
+# all tests with watch
+npm run test:watch
+
+#coverage
+npm run test:coverage
+```
 
 ## Deploy
-Configured the adapter to deploy on Cloudflare [pages](https://developers.cloudflare.com/pages/get-started)
+Configured the adapter to deploy with CI & CD on [Cloudflare Pages](https://developers.cloudflare.com/pages/get-started)
