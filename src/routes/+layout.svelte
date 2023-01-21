@@ -1,8 +1,5 @@
-<script>
-	import { env } from '$env/dynamic/public';
+<script lang="ts">
 	import '../styles/app.css';
-
-	console.log(env);
 </script>
 
 <article>
