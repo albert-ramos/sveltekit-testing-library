@@ -1,5 +1,5 @@
 import Index from '@/routes/+page.svelte';
-import { findByText, render, waitFor } from '@testing-library/svelte';
+import { render, waitFor } from '@testing-library/svelte';
 import {
 	getTopics,
 	addTopicLike,
@@ -36,6 +36,7 @@ describe('Topics Page', () => {
 			expect(await findByText(topic.title)).toBeInTheDocument();
 		});
 
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
 		it.skip("should show no items when there's no topics", () => {});
 
 		it('likes clicked topic', async () => {
@@ -144,6 +145,7 @@ describe('Topics Page', () => {
 			});
 		});
 
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
 		it.skip('should be able to add like when created topic has been added to list', () => {});
 	});
 });
