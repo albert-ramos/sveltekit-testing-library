@@ -4,14 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       name:
-        description: "Deploy to Cloudflare Pages"
+        description: 'Deploy to Cloudflare Pages'
 
 jobs:
-    trigger:
-        runs-on: ubuntu-latest
+  trigger:
+    runs-on: ubuntu-latest
 
-        steps:
-        - name: Trigger deploy
-          uses: distributhor/workflow-webhook@v3.0.2
-          env:
-            webhook_url: https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/71d3ccfb-2d5c-4a99-b4bd-0169400fb664
+    steps:
+      - name: Trigger deploy
+        uses: distributhor/workflow-webhook@v3.0.2
+        env:
+          webhook_url: https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/71d3ccfb-2d5c-4a99-b4bd-0169400fb664

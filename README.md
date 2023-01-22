@@ -1,7 +1,5 @@
 # Sveltekit with Testing Library Skeleton
 
-
-
 ## Developing
 
 Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
@@ -39,4 +37,5 @@ npm run test:coverage
 ```
 
 ## Deploy
+
 Configured the adapter to deploy with CI & CD on [Cloudflare Pages](https://developers.cloudflare.com/pages/get-started)

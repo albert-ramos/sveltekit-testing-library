@@ -1,8 +1,8 @@
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, addDoc } from 'firebase/firestore';
 import db from '@/shared/firebase/DbSetup';
 
 export type Topic = {
-	id: string;
+	id?: string;
 	description: string;
 	title: string;
 	likes: number;
@@ -16,6 +16,15 @@ const getTopics = async (): Promise<Topic[]> => {
 			...doc.data()
 		} as Topic;
 	});
+};
+
+const createTopic = async (topic: Topic): Promise<Topic> => {
+	const doc = await addDoc(collection(db, 'topics'), topic);
+
+	return {
+		...topic,
+		id: doc.id
+	};
 };
 
 const addTopicLike = async (id: string) => {
@@ -36,4 +45,4 @@ const addTopicLike = async (id: string) => {
 	return response.json();
 };
 
-export { getTopics, addTopicLike };
+export { getTopics, addTopicLike, createTopic };

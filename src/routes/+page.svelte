@@ -2,13 +2,15 @@
 	import { onMount } from 'svelte';
 	import {
 		addTopicLike,
+		createTopic,
 		getTopics,
 		type Topic
 	} from '@/modules/topic/infrastructure/repository/TopicRepository';
+
 	let topics: Topic[] = [];
 
 	onMount(async () => {
-		topics = await getTopics();
+		topics = (await getTopics()) || [];
 	});
 
 	const onLike = (id: string) => {
@@ -21,27 +23,97 @@
 			console.error(e);
 		}
 	};
+
+	let titleInput = '';
+	let descriptionInput = '';
+
+	const addTopic = async () => {
+		const newTopic: Topic = {
+			title: titleInput,
+			description: descriptionInput,
+			likes: 0
+		};
+
+		try {
+			const createdTopic = await createTopic(newTopic);
+
+			topics = [createdTopic, ...topics];
+
+			titleInput = '';
+			descriptionInput = '';
+		} catch (e) {
+			console.log(e);
+		}
+	};
 </script>
 
 <svelte:head>
-	<title>Topics</title>
+	<title>¿De qué temas quereis hablar?</title>
 </svelte:head>
 
+<div class="flex flex-col container max-w-md mt-10 mx-auto w-full justify-center">
+	<form on:submit|preventDefault={addTopic}>
+		<div>
+			<label
+				data-testid="title-label"
+				for="title-input"
+				class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label
+			>
+			<input
+				bind:value={titleInput}
+				data-testid="title-input"
+				type="text"
+				id="title-input"
+				class="block w-full p-3 text-gray-900 rounded-lg sm:text-xs dark:bg-opacity-30 dark:bg-gray-100 border-none dark:border-b-gray-600 dark:placeholder-gray-400 dark:text-black outline-0 dark:focus:shadow-md"
+			/>
+		</div>
+		<div class="my-5">
+			<label
+				data-testid="description-label"
+				for="description-input"
+				class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label
+			>
+			<textarea
+				bind:value={descriptionInput}
+				data-testid="description-input"
+				id="description-input"
+				rows="4"
+				class="block w-full p-3 text-gray-900 rounded-lg sm:text-xs dark:bg-opacity-30 dark:bg-gray-100 border-none dark:border-b-gray-600 dark:placeholder-gray-400 dark:text-black outline-0 dark:focus:shadow-md"
+			/>
+		</div>
+		<div class="flex justify-end">
+			<button
+				type="submit"
+				data-testid="submit-button"
+				class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+			>
+				Añadir +
+			</button>
+		</div>
+	</form>
+</div>
+
 <div
-	class="flex flex-col container max-w-md mt-10 mx-auto w-full items-center justify-center bg-white dark:bg-gray-800 dark:hover:bg-gray-900 rounded-lg shadow"
+	class="flex flex-col container max-w-md mt-10 mx-auto w-full items-center justify-center"
 	data-testid="topic-container"
 >
-	<ul class="flex flex-col divide-y w-full">
+	<ul class="flex flex-col w-full">
 		{#each topics as { id, description, title, likes }, i}
-			<li class="flex flex-row">
-				<div class="select-none flex flex-1 items-center p-4">
+			<li class="flex flex-row mb-4">
+				<div
+					class="select-none flex flex-1 items-center p-4 rounded-lg bg-white dark:bg-gray-800 dark:hover:bg-gray-900 "
+				>
 					<div class="flex-1 pl-1">
 						<div class="font-medium dark:text-white">{title}</div>
-						<div class="text-gray-600 dark:text-gray-200 text-sm">{description}</div>
+						<div class="text-gray-600 dark:text-gray-200 text-sm mr-2">{description}</div>
 					</div>
 					<div class="flex flex-row justify-center">
-						<div class="text-gray-600 dark:text-gray-200 text-xs">{likes} likes</div>
-						<button class="w-10 text-right flex justify-end" on:click={() => onLike(id)}>
+						<div class="text-gray-600 dark:text-gray-200 text-xs ml-2">{likes} likes</div>
+						<button
+							class="w-10 text-right flex justify-end"
+							data-testid="like-btn"
+							on:click={() => onLike(id)}
+						>
 							<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
 								><g id="SVGRepo_bgCarrier" stroke-width="0" /><g
 									id="SVGRepo_tracerCarrier"
